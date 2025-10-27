@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conference Event Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #f6f8fa;
+      font-family: 'Open Sans', Arial, sans-serif;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+    .registration-container {
+      background: #fff;
+      max-width: 450px;
+      margin: 4rem auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      padding: 2.5rem 2rem 2rem 2rem;
+    }
+    h2 {
+      text-align: center;
+      color: #2563eb;
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 1.8rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #13325a;
+      display: block;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #b6bef2;
+      border-radius: 5px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #2563eb;
+      background: #f0f6ff;
+    }
+    .error-message {
+      color: #e11d48;
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
+      margin-bottom: -0.75rem;
+      min-height: 1.2em;
+      display: block;
+    }
+    button[type="submit"] {
+      background: #2563eb;
+      color: #fff;
+      font-size: 1.09rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      margin-top: 0.6rem;
+      padding: 0.9rem;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.13);
+      cursor: pointer;
+      transition: background 0.19s;
+    }
+    button[type="submit"]:hover {
+      background: #174bab;
+    }
+    @media (max-width: 600px) {
+      .registration-container {
+        margin: 2rem 0.5rem;
+        padding: 1.5rem 0.5rem;
+      }
+    }
+    .visually-hidden {
+      position: absolute;
+      width: 1px; height: 1px;
+      margin: -1px; border: 0; padding: 0;
+      clip: rect(0 0 0 0);
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="registration-container" role="form" aria-labelledby="regTitle">
+    <h2 id="regTitle">Conference Registration</h2>
+    <form id="registrationForm" novalidate autocomplete="off">
+      
+      <div>
+        <label for="name">Full Name <span aria-hidden="true" style="color:#e11d48">*</span></label>
+        <input type="text" id="name" name="name" required aria-required="true" aria-describedby="nameError" autocomplete="name" />
+        <span class="error-message" id="nameError" aria-live="polite"></span>
+      </div>
+
+      <div>
+        <label for="email">Email Address <span aria-hidden="true" style="color:#e11d48">*</span></label>
+        <input type="email" id="email" name="email" required aria-required="true" aria-describedby="emailError" autocomplete="email" />
+        <span class="error-message" id="emailError" aria-live="polite"></span>
+      </div>
+
+      <div>
+        <label for="phone">Phone Number <span aria-hidden="true" style="color:#e11d48">*</span></label>
+        <input type="tel" id="phone" name="phone" required aria-required="true" minlength="10" maxlength="15" aria-describedby="phoneError" autocomplete="tel-national" />
+        <span class="error-message" id="phoneError" aria-live="polite"></span>
+      </div>
+
+      <div>
+        <label for="session">Select Session <span aria-hidden="true" style="color:#e11d48">*</span></label>
+        <select id="session" name="session" required aria-required="true" aria-describedby="sessionError">
+          <option value="">-- Please select a session --</option>
+          <option value="ai">AI &amp; Machine Learning</option>
+          <option value="cloud">Cloud Computing</option>
+          <option value="blockchain">Blockchain Applications</option>
+          <option value="iot">Internet of Things</option>
+        </select>
+        <span class="error-message" id="sessionError" aria-live="polite"></span>
+      </div>
+
+      <button type="submit" aria-label="Submit Registration Form">Register</button>
+    </form>
+    <div id="confirmMessage" class="error-message" style="color:#18ac41; font-size:1.13rem; text-align: center; margin-top:1.3rem;" aria-live="polite"></div>
+  </div>
+
+  <script>
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let isValid = true;
+      const nameField = document.getElementById('name');
+      const emailField = document.getElementById('email');
+      const phoneField = document.getElementById('phone');
+      const sessionField = document.getElementById('session');
+      const nameError = document.getElementById('nameError');
+      const emailError = document.getElementById('emailError');
+      const phoneError = document.getElementById('phoneError');
+      const sessionError = document.getElementById('sessionError');
+      const confirmMessage = document.getElementById('confirmMessage');
+      nameError.textContent = "";
+      emailError.textContent = "";
+      phoneError.textContent = "";
+      sessionError.textContent = "";
+      confirmMessage.textContent = "";
+
+      // Name Validation
+      if (!nameField.value.trim()) {
+        nameError.textContent = "Please enter your name.";
+        nameField.setAttribute('aria-invalid', 'true');
+        isValid = false;
+      } else {
+        nameField.removeAttribute('aria-invalid');
+      }
+      // Email Validation
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailField.value.trim()) {
+        emailError.textContent = "Email is required.";
+        emailField.setAttribute('aria-invalid', 'true');
+        isValid = false; } else if (!emailPattern.test(emailField.value.trim())) {
+        emailError.textContent = "Please enter a valid email address.";
+        emailField.setAttribute('aria-invalid', 'true');
+        isValid = false; } else {
+        emailField.removeAttribute('aria-invalid');}
+      const phonePattern = /^\+?\d{10,15}$/;
+      if (!phoneField.value.trim()) {
+        phoneError.textContent = "Phone number is required.";
+        phoneField.setAttribute('aria-invalid', 'true');
+        isValid = false; } else if (!phonePattern.test(phoneField.value.replace(/\s+/g, ""))) {
+        phoneError.textContent = "Please enter a valid phone number (10-15 digits, may start with '+').";
+        phoneField.setAttribute('aria-invalid', 'true');
+        isValid = false; } else {
+        phoneField.removeAttribute('aria-invalid');}
+      if (!sessionField.value) {
+        sessionError.textContent = "Please select a session.";
+        sessionField.setAttribute('aria-invalid', 'true');
+        isValid = false; } else {
+        sessionField.removeAttribute('aria-invalid');}
+      if (isValid) {
+        confirmMessage.style.color = "#18ac41";
+        confirmMessage.textContent = "Registration successful! Thank you for registering.";
+        document.getElementById('registrationForm').reset();} });
+    ['name', 'email', 'phone', 'session'].forEach(function(fieldId) {
+      document.getElementById(fieldId).addEventListener('input', function() {
+        document.getElementById(fieldId + 'Error').textContent = "";
+        this.removeAttribute('aria-invalid');
+        document.getElementById('confirmMessage').textContent = "";}); });
+  </script>
+</body>
+</html>
+

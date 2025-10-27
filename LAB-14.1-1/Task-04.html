@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fetch API: Render List with Loading/Error</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6fb;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 480px;
+      margin: 3rem auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      padding: 2rem 1.2rem 1.5rem 1.2rem;
+    }
+    h2 {
+      text-align: center;
+      color: #2257bc;
+      margin-bottom: 1.5rem;
+    }
+    #status-message {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+      min-height: 2em;
+    }
+    ul#item-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li.item {
+      background: #e7ecfa;
+      margin: 0.6em 0;
+      padding: 0.9em 1em;
+      border-radius: 5px;
+      box-shadow: 0 1px 4px rgba(34, 87, 188, 0.07);
+      font-size: 1rem;
+      display: flex;
+      gap: 0.8em;
+      align-items: center;
+    }
+    .skeleton {
+      height: 1.25em;
+      width: 80%;
+      background: linear-gradient(90deg,#ececec 40%,#e0e5ef 60%,#ececec 100%);
+      border-radius: 3px;
+      margin: 0.7em 0;
+      animation: shimmer 1.2s infinite linear;
+    }
+    @keyframes shimmer {
+      0% {background-position: -400px 0;}
+      100% {background-position: 400px 0;}
+    }
+    .error {
+      color: #d7263d;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Users List</h2>
+    <div id="status-message">Loading...</div>
+    <ul id="item-list"></ul>
+  </div>
+  <script>
+    // DOM Elements
+    const statusMessage = document.getElementById('status-message');
+    const itemList = document.getElementById('item-list');
+
+    // Show skeleton loading placeholders
+    function showSkeleton(count = 5) {
+      itemList.innerHTML = '';
+      for (let i = 0; i < count; i++) {
+        const li = document.createElement('li');
+        li.className = "item";
+        const skel = document.createElement('div');
+        skel.className = "skeleton";
+        skel.style.width = `${70 + Math.random()*25}%`;
+        li.appendChild(skel);
+        itemList.appendChild(li);
+      }
+    }
+
+    // Render fetched items safely
+    function renderItems(users) {
+      itemList.innerHTML = '';
+      users.forEach(user => {
+        const li = document.createElement('li');
+        li.className = "item";
+        // Use safe textContent to avoid XSS
+        const avatar = document.createElement('span');
+        avatar.style.display = "inline-block";
+        avatar.style.width = "36px";
+        avatar.style.height = "36px";
+        avatar.style.borderRadius = "50%";
+        avatar.style.background = "#c1d2fd";
+        avatar.style.textAlign = 'center';
+        avatar.style.lineHeight = "36px";
+        avatar.style.fontWeight = 'bold';
+        avatar.style.marginRight = "8px";
+        avatar.textContent = (user.name && user.name[0]) ? user.name[0].toUpperCase() : "?";
+        const name = document.createElement('span');
+        name.textContent = user.name || "[No name]";
+        li.appendChild(avatar);
+        li.appendChild(name);
+        itemList.appendChild(li); }); }
+    function fetchUsersList() {
+      statusMessage.textContent = "Loading...";
+      showSkeleton(5);
+      fetch("https://jsonplaceholder.typicode.com/users")
+        .then(response => {
+          if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+          return response.json(); })
+        .then(data => {
+          if (!Array.isArray(data)) throw new Error("API error: Data not an array");
+          if (data.length === 0) {
+            statusMessage.textContent = "No users found.";
+            itemList.innerHTML = ""; } else {
+            statusMessage.textContent = "";
+            renderItems(data); } })
+        .catch(err => {
+          statusMessage.textContent = "";
+          itemList.innerHTML = `<li class="error">Error: ${err.message}</li>`; }); }
+    fetchUsersList();
+  </script>
+</body>
+</html>
+
