@@ -1,0 +1,34 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-car",
+      "description": "A car on the side of a scenic road at sunset",
+      "imageUrl": "https://images.unsplash.com/photo-1763211321083-ccd63db5be94?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjYXIlMjByb2Fkc2lkZXxlbnwwfHx8fDE3NjMyODcxNDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "car roadside"
+    },
+    {
+      "id": "map-background",
+      "description": "A blurred street map background",
+      "imageUrl": "https://images.unsplash.com/photo-1717343824623-06293a62a70d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdHJlZXQlMjBtYXB8ZW58MHx8fHwxNzYzMjUyOTU2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "street map"
+    },
+    {
+      "id": "mechanic-1",
+      "description": "Portrait of a friendly mechanic",
+      "imageUrl": "https://images.unsplash.com/photo-1656156775128-7df95b7a79c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtZWNoYW5pYyUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MzI4NzE0OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mechanic portrait"
+    },
+    {
+      "id": "mechanic-2",
+      "description": "Portrait of a female mechanic",
+      "imageUrl": "https://images.unsplash.com/photo-1661488567801-4b03075c0805?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx3b21hbiUyMG1lY2hhbmljfGVufDB8fHx8MTc2MzIxNTc5NXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman mechanic"
+    },
+    {
+      "id": "mechanic-3",
+      "description": "Portrait of a skilled mechanic",
+      "imageUrl": "https://images.unsplash.com/photo-1656156775155-7404564589e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtZWNoYW5pYyUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MzI4NzE0OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mechanic portrait"
+    }
+  ]
+}
